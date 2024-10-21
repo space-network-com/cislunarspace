@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products - Cislunar Space and Beyond</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Verdana', sans-serif;
+            background: url('./data/Moon_Earth.jpg') no-repeat center center fixed;
+            background-size: cover;
+            color: white;
+            overflow: hidden;
+        }
+        h2 {
+            text-shadow: 0px 0px 15px #00ff00;
+            font-family: 'Courier New', Courier, monospace;
+            font-weight: bold;
+            letter-spacing: 2px;
+            color: #00ff00;
+        }
+        nav {
+            padding: 20px;
+            background-color: rgba(0, 0, 0, 0.6);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            text-transform: uppercase;
+            font-family: 'Courier New', Courier, monospace;
+            font-weight: bold;
+        }
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+        }
+        nav ul li {
+            margin: 0 15px;
+        }
+        nav ul li a {
+            text-decoration: none;
+            color: white;
+            font-size: 1.2em;
+            transition: color 0.3s ease;
+        }
+        nav ul li a:hover {
+            color: #ff0000;
+        }
+        .section {
+            padding: 10px 10px;
+            background-color: rgba(0, 0, 0, 0.5);
+            margin: 20px;
+            border-radius: 5px;
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.6);
+            position: relative;
+            text-align: left;
+            width: 20%;
+            margin-left: 5%;
+        }
+        .section p {
+            display: none;
+            position: absolute;
+            top: 20%;
+            left: 105%;
+            width: 550px;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 10px 10px;
+	    margin: 20px;
+            border-radius: 5px;
+            text-align: center;
+            transform: translateY(-50%);
+        }
+        .section:hover p {
+            display: block;
+        }
+        footer {
+            margin-top: 60px;
+            padding: 20px;
+            background-color: rgba(0, 0, 0, 0.8);
+            color: #00bfff;
+            font-family: 'Courier New', Courier, monospace;
+            font-weight: bold;
+            text-transform: uppercase;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="index.html">About</a></li>
+            <li><a href="products.html" style="border-bottom: 2px solid red;">Products</a></li>
+            <li><a href="demo.html">Demo</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+    </nav>
+
+    <h2 style="color: white; text-align: left; margin-left: 5%; margin-bottom: 5%"></h2>
+
+    <div class="section" id="cislunar-orbits">
+        <h2>Cislunar Orbits</h2>
+        <p>Our tools provide accurate modeling of various cislunar orbits, enabling mission planners to understand satellite dynamics in the complex space between Earth and the Moon.</p>
+    </div>
+    <div class="section" id="earth-orbits">
+        <h2>Earth Orbits</h2>
+        <p>We support detailed simulations of different types of Earth orbits, including low Earth orbit (LEO), geostationary orbit (GEO), and beyond, to facilitate comprehensive mission planning and analysis.</p>
+    </div>
+    <div class="section" id="manifold-earth-moon">
+        <h2>Manifolds to Transfer from Earth to Moon</h2>
+        <p>Our expertise includes generating and visualizing manifolds that define efficient pathways for transferring spacecraft from Earth to the Moon, helping to optimize mission success.</p>
+    </div>
+    <div class="section" id="optical-communication">
+        <h2>Model for Optical Communication Channels</h2>
+        <p>We provide high-fidelity models for optical communication channels, allowing users to analyze the feasibility and performance of optical links between spacecraft and ground stations.</p>
+    </div>
+    <div class="section" id="multi-relay">
+        <h2>Multi-Relay Cislunar Communication</h2>
+        <p>Our tools support the simulation of multi-relay communication setups in the cislunar environment, ensuring reliable connectivity for spacecraft and lunar surface operations.</p>
+    </div>
+
+    <footer >
+        &copy; 2024 Cislunar Space Communication | Boldly going where no one has gone before.
+    </footer>
+</body>
+</html>
+
