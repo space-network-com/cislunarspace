@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demo - Lunar Orbit Visualization</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Verdana', sans-serif;
+            background: url('./data/cislunar_theme.jpg') no-repeat center center fixed;
+            background-size: cover;
+            color: white;
+            overflow: hidden;
+        }
+        nav {
+            padding: 20px;
+            background-color: rgba(0, 0, 0, 0.6);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            text-transform: uppercase;
+            font-family: 'Courier New', Courier, monospace;
+            font-weight: bold;
+        }
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+        }
+        nav ul li {
+            margin: 0 15px;
+        }
+        nav ul li a {
+            text-decoration: none;
+            color: white;
+            font-size: 1.2em;
+            transition: color 0.3s ease;
+        }
+        nav ul li a:hover {
+            color: #ff0000;
+        }
+       
+	#orbit-visualization-container {
+            position: relative;
+	    width: 80%;
+            height: 500px;
+            margin: 50px auto;
+            border-radius: 15px;
+            background-color: rgba(0, 0, 0, 0.8);
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+        }
+        #orbit-visualization {
+	position:absolute;
+	top: 0px;
+	left: 0%;
+        width: 45%;
+        height: 500px;
+        border-radius: 15px;
+        background-color: rgba(0, 0, 0, 0.8);
+        box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+        }
+
+	#orbit-details {
+        display: none;
+        padding-left: 20px;
+        }
+        #orbitPlot {
+        position:absolute;
+	top:0px;
+	left:100%;
+	width: 110%;
+        height: 500px;
+        border-radius: 15px;
+        background-color: rgba(0, 0, 0, 0.8);
+        box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+        }
+	footer {
+            position: relative;
+	    top: 600px;
+	    margin-top: 50px;
+            padding: 20px;
+            background-color: rgba(0, 0, 0, 0.8);
+            color: #00bfff;
+            font-family: 'Courier New', Courier, monospace;
+            font-weight: bold;
+            text-transform: uppercase;
+            text-align: center;
+            position: absolute;
+	    bottom: 20px;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="index.html">About</a></li>
+            <li><a href="products.html">Products</a></li>
+            <li><a href="demo.html" style="border-bottom: 2px solid red;">Demo</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+    </nav>
+
+    <h2 style="color: white; text-align: center; margin-top: 30px;">Lunar Orbit Visualization</h2>
+
+    <div id="orbit-visualization-container">
+    <div id="orbit-visualization">
+    
+	    <div style="padding-left: 20px;">
+            <label for="orbitFamily">Select Orbit Family:</label><br>
+            <select id="orbitFamily">
+                <option value="">-- Select Orbit Family --</option>
+                <option value="Halo_L1_Southern">Halo L1 Southern</option>
+                <option value="Halo_L1_Northern">Halo L1 Northern</option>
+                <option value="Halo_L2_Southern">Halo L2 Southern</option>
+                <option value="Halo_L2_Northern">Halo L2 Northern</option>
+                <option value="Lyapunov_L1">Lyapunov L1</option>
+                <option value="Lyapunov_L2">Lyapunov L2</option>
+            </select>
+            <br><br>
+            <label for="orbit">Select Orbit:</label><br>
+            <select id="orbit">
+                <option value="">-- Select Orbit --</option>
+            </select>
+	    <br><br>
+	   <div id="orbit-details" style="display: none; padding-left: 20px;">
+                <h3>Orbit Details</h3>
+                <p id="orbit-data"></p>
+	   </div>
+    </div>
+     <div id="orbitPlot" ></div>
+    </div>
+    <footer>
+        &copy; 2024 Cislunar Space Communication | Boldly going where no one has gone before.
+    </footer>
+
+    <script>
+        // Placeholder for the lunar orbit visualization script
+        // This could be replaced with an actual library or script to visualize the orbit
+	 document.getElementById('orbit').addEventListener('change', function() {
+            const orbitId = this.value;
+	    if (orbitId) {
+            fetch(`/orbit-data?orbitID=${orbitId}`)
+            .then(response => response.json())
+            .then(data => {
+                // Extract the x, y, z coordinates from the orbit data
+                const x = data.map(point => point[0]);
+                const y = data.map(point => point[1]);
+                const z = data.map(point => point[2]);
+
+                const mu = 0.01215058560962404; // Earth-Moon system mass ratio
+                const earthPosition = [-mu, 0, 0]; // Earth at (-mu, 0, 0)
+                const moonPosition = [1 - mu, 0, 0]; // Moon at (1 - mu, 0, 0)
+
+                // Plot the orbit using Plotly
+                const traceOrbit = {
+                    x: x,
+                    y: y,
+                    z: z,
+                    mode: 'lines',
+                    type: 'scatter3d',
+                    line: {
+                        color: 'blue',
+                        width: 2
+                    },
+                    name: `${orbitId}`
+                };
+
+                const traceEarth = {
+                    x: [earthPosition[0]],
+                    y: [earthPosition[1]],
+                    z: [earthPosition[2]],
+                    mode: 'markers',
+                    type: 'scatter3d',
+                    marker: {
+                        size: 20,
+                        color: 'green',
+                        opacity: 0.8
+                    },
+                    name: 'Earth'
+                };
+
+                const traceMoon = {
+                    x: [moonPosition[0]],
+                    y: [moonPosition[1]],
+                    z: [moonPosition[2]],
+                    mode: 'markers',
+                    type: 'scatter3d',
+                    marker: {
+                        size: 10,
+                        color: 'gray',
+                        opacity: 0.8
+                    },
+                    name: 'Moon'
+                };
+
+                const layout = {
+                    title: `${orbitId}`,
+                    margin: { l: 0, r: 0, b: 0, t: 50 }
+                };
+
+                Plotly.newPlot('orbitPlot', [traceOrbit, traceEarth, traceMoon], layout);
+            })
+            .catch(error => console.error('Error fetching orbit data:', error));
+    }
+
+
+            const orbitFamily = document.getElementById('orbitFamily').value;
+            const orbitDetailsDiv = document.getElementById('orbit-details');
+            const orbitDataParagraph = document.getElementById('orbit-data');
+
+            if (orbitId && orbitFamily) {
+                fetch(`./data/${orbitFamily}.json`)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        const selectedOrbit = data.find(orbit => orbit["Orbit ID"] === orbitId);
+                        if (selectedOrbit) {
+                            // Display the orbit details
+                            orbitDetailsDiv.style.display = 'block';
+                            orbitDataParagraph.innerHTML = `
+                                <strong>Orbit ID:</strong> ${selectedOrbit["Orbit ID"]}<br>
+                                <strong>x0 [LU]:</strong> ${selectedOrbit["x0 [LU]"]}<br>
+                                <strong>y0 [LU]:</strong> ${selectedOrbit["y0 [LU]"]}<br>
+                                <strong>z0 [LU]:</strong> ${selectedOrbit["z0 [LU]"]}<br>
+                                <strong>xdot0 [LU/TU]:</strong> ${selectedOrbit["xdot0 [LU/TU]"]}<br>
+                                <strong>ydot0 [LU/TU]:</strong> ${selectedOrbit["ydot0 [LU/TU]"]}<br>
+                                <strong>zdot0 [LU/TU]:</strong> ${selectedOrbit["zdot0 [LU/TU]"]}<br>
+                                <strong>Tp [TU]:</strong> ${selectedOrbit["Tp [TU]"]}<br>
+                                <strong>C (Jacobi Constant):</strong> ${selectedOrbit["C"]}<br>
+                                <strong>Stability Index:</strong> ${selectedOrbit["Stability"]}<br>
+                                <strong>Perilune [LU]:</strong> ${selectedOrbit["Perilune [LU]"]}<br>
+                                <strong>x-amplitude:</strong> ${selectedOrbit["x-amplitude"]}<br>
+                                <strong>y-amplitude:</strong> ${selectedOrbit["y-amplitude"]}<br>
+                                <strong>z-amplitude:</strong> ${selectedOrbit["z-amplitude"]}<br>
+                            `;
+                        }
+                    })
+                    .catch(error => {
+                        console.error('There was a problem with the fetch operation:', error);
+                    });
+            } else {
+                orbitDetailsDiv.style.display = 'none';
+            }
+        });
+    </script>
+    <script>
+        // Handle orbit family selection and load corresponding JSON file
+        document.getElementById('orbitFamily').addEventListener('change', function() {
+            const orbitFamily = this.value;
+            const orbitSelect = document.getElementById('orbit');
+            orbitSelect.innerHTML = '<option value="">-- Select Orbit --</option>'; // Clear previous options
+
+            if (orbitFamily) {
+                fetch(`./data/${orbitFamily}.json`)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        // Assuming data is an array of orbits, iterate and add options to the select element
+                        data.forEach(orbit => {
+                            const orbitId = orbit["Orbit ID"];
+                            const option = document.createElement('option');
+                            option.value = orbitId;
+                            option.textContent = orbitId;
+                            orbitSelect.appendChild(option);
+                        });  
+                      
+	             })
+                    .catch(error => {
+                        console.error('There was a problem with the fetch operation:', error);
+                    });
+            }
+        });
+    </script>
+
+</body>
+</html>
+

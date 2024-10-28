@@ -11,8 +11,10 @@
   "author": "spaceNet",
   "license": "ISC",
   "dependencies": {
+    "body-parser": "^1.20.3",
     "express": "^4.21.1",
-    "node-fetch": "^3.3.2"
+    "node-fetch": "^3.3.2",
+    "nodemailer": "^6.9.15"
   },
   "repository": {
     "type": "git",

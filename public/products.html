@@ -61,24 +61,29 @@
             width: 20%;
             margin-left: 5%;
         }
-        .section p {
+	 .section:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+	  .section p {
             display: none;
-            position: absolute;
-            top: 20%;
-            left: 105%;
-            width: 550px;
-            background-color: rgba(0, 0, 0, 0.5);
-            padding: 10px 10px;
-	    margin: 20px;
-            border-radius: 5px;
+            position: fixed;
+            top: 30%;
+            left: 50%;
+            width: 800px;
+            background-color: rgba(128, 128, 128, 0.8);
+            padding: 40px;
+            border-radius: 10px;
             text-align: center;
-            transform: translateY(-50%);
+            transform: translate(-50%, -50%);
+            font-size: 1.2em;
+            line-height: 2;
+            font-family: 'Courier New', Courier, monospace;
         }
         .section:hover p {
             display: block;
         }
-        footer {
-            margin-top: 60px;
+	 footer {
+            margin-top: 50px;
             padding: 20px;
             background-color: rgba(0, 0, 0, 0.8);
             color: #00bfff;
@@ -86,7 +91,11 @@
             font-weight: bold;
             text-transform: uppercase;
             text-align: center;
+            position: absolute;
+            bottom: 20px;
+            width: 100%;
         }
+       
     </style>
 </head>
 <body>
@@ -99,27 +108,29 @@
         </ul>
     </nav>
 
-    <h2 style="color: white; text-align: left; margin-left: 5%; margin-bottom: 5%"></h2>
+    <h1 style="color: white; text-align: centered; margin-left: 5%; ">Product Detials </h1>
 
     <div class="section" id="cislunar-orbits">
         <h2>Cislunar Orbits</h2>
-        <p>Our tools provide accurate modeling of various cislunar orbits, enabling mission planners to understand satellite dynamics in the complex space between Earth and the Moon.</p>
-    </div>
-    <div class="section" id="earth-orbits">
-        <h2>Earth Orbits</h2>
-        <p>We support detailed simulations of different types of Earth orbits, including low Earth orbit (LEO), geostationary orbit (GEO), and beyond, to facilitate comprehensive mission planning and analysis.</p>
+        <p> 
+         Our tools provide accurate modeling of various CR3BP orbits of different classes, enabling mission planners to select appropriate satellite orbits for cislunar communication. Each of these periodic orbits (e.g., Halo Orbits, Lyapunov, Resonance, etc.) has specific characteristics and applications, often determined by their stability and mission objectives. These orbits are crucial for maintaining predictable lunar surface coverage in space mission design.
+	</p>
     </div>
     <div class="section" id="manifold-earth-moon">
-        <h2>Manifolds to Transfer from Earth to Moon</h2>
-        <p>Our expertise includes generating and visualizing manifolds that define efficient pathways for transferring spacecraft from Earth to the Moon, helping to optimize mission success.</p>
+        <h2>Trajectoris between Earth and Moon</h2>
+        <p>
+	We use invariant manifolds to design efficient trajectories between periodic orbits from Earth. In CR3BP, invariant manifolds play an important role in connecting different regions of space, providing pathways for low-energy transfers.
+	</p>
     </div>
     <div class="section" id="optical-communication">
-        <h2>Model for Optical Communication Channels</h2>
+        <h2>Communication Channels</h2>
         <p>We provide high-fidelity models for optical communication channels, allowing users to analyze the feasibility and performance of optical links between spacecraft and ground stations.</p>
     </div>
     <div class="section" id="multi-relay">
         <h2>Multi-Relay Cislunar Communication</h2>
-        <p>Our tools support the simulation of multi-relay communication setups in the cislunar environment, ensuring reliable connectivity for spacecraft and lunar surface operations.</p>
+        <p>
+	Users can simulate several types of multi-relay communication network architectures in cislunar space, each serving specific roles based on their unique characteristics: Orbital Relay Satellites provide communication between lunar assets and Earth; Lagrange Point Relays offer constant communication from stable positions; Lunar Surface Relays facilitate communication between assets on the lunar surface; High Elliptical Orbit (HEO) Relays maintain longer communication windows over key areas; Surface-to-Orbit-to-Earth (SOE) Relays ensure data reaches Earth reliably from the lunar surface.
+	</p>
     </div>
 
     <footer >
